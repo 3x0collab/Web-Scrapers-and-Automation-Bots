@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{{ title }} </title>
+
+    <style>
+
+
+    html { font-size:100.01%; }
+body {
+	border:1px solid #eee;
+  font-size: 75%;
+  color: #222;
+  background: #fff;
+  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+
+table       { margin-bottom: 1.4em; width:100%; }
+th          { font-weight: bold; text-transform: capitalize; }
+thead th    { background: #c3d9ff; }
+th,td,caption { padding: 4px 10px 4px 5px; }
+
+th {
+    text-align: left ;
+}
+
+
+tfoot       { font-style: italic; font-weight: bold; }
+caption     { background: #eee; }
+
+th {
+    text-align: left !important;
+}
+
+
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.flex {
+
+  display: flex !important;
+  justify-content: space-around ;
+}
+
+
+.img_flex {
+
+  display: flex !important;
+  justify-content: space-between;
+}
+
+
+.img_flex2 {
+	padding-right: 15px;
+}
+.img_flex2 img {
+	/*width: 90%;*/
+}
+
+.row {
+  width:50%;
+  box-shadow: rgba(0,0,0,0.54) 0px 0px 2px;
+  border: 1px solid #eee;
+}
+
+.bold {
+    font-weight: bold;
+    color:rgb(60,60,60);
+}
+body {
+    padding-left: 13px;
+    padding-right: 13px;
+}
+
+h1 {
+   background: rgb(21, 101, 192);
+    padding: 12px;
+    color: white;
+}
+
+p {    
+    font-size: 15px
+}
+div.details p{
+    margin-bottom: 8px;
+    margin-top: 5px;
+        padding-left: 10px;
+
+    
+}
+
+table {
+    border-spacing: 0px !important;
+    border-color: white;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+table td{
+    font-size: 12px;
+     border-right:  10px;
+    border-bottom: 0;
+    border-top: 0;
+    padding-left: 10px;
+}
+
+table th {
+       font-size: 12px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+        background-color: rgb(21, 101, 192);
+    color: white;
+}
+
+div.flex {
+    justify-content: space-between
+}
+div.flex  .row {
+  width: 49%;  
+    
+}
+
+img {
+    width:100%;
+} 
+
+p.label{
+        text-align: left;
+    background-color: rgb(21, 101, 192);
+    color: whitesmoke;
+    font-size: 13px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 7px;
+    font-weight: bold;
+    margin-top: 0px;
+}
+
+p.label2{
+        text-align: left;
+  background: gray;
+    margin-top: 25px;
+
+    color: whitesmoke;
+    font-size: 13px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 7px;
+    font-weight: bold;
+        margin-bottom:  -16px;
+
+}
+
+
+.color {
+    padding-left: 7px;
+    padding-right: 7px;
+    margin-right: 4px;
+    width:100%;
+}
+
+.blue {
+	color:rgb(21, 101, 192);
+}
+
+
+ul li{
+    
+    list-style: none;
+    margin-bottom: 6px;
+      
+}
+
+.dash {
+    
+    margin-left: 14px;
+    margin-right: 14px;
+}
+
+h1,.reason {
+    font-size: 16px;
+}
+
+
+
+
+</style>
+
+
+
+</head>
+<body>
+	
+
+<div class=""> 
+
+<div >
+    <h1>Sanction Screening Report <span class='dash' > - </span>  <span class='reason' >   {{reason}} </span> </h1>
+    <div class='details' >
+    <p class='search' > {{count}} results found for: <span class='bold blue'> {{value}}  </span> </p>
+    <p class='user' > 
+    	<span> <span class='bold'> User: </span> <span class='blue'>  {{user}} </span></span>
+    	<span>  ({{search_date}})</span>,
+    	<span> <span class='bold'> ScanTab: </span> {{scanTab}} </span>
+     </p>
+     <p class="creteria" > <span class='bold'> Criteria: </span> {{creteria}} </p>
+
+    </div>
+
+     {{ national_pivot_table }}
+</div>
+
+
+
+<p class="label" > Results By Category </p>
+<div class='flex' >
+
+<div class="row">
+
+<div class="img_flex2" >
+<img style="object-fit: contain" src={{chart_url}} >
+
+</div>
+
+</div>
+
+<div class="row">
+<img style="object-fit: contain"  src={{bar_url}} >
+</div>
+
+</div>
+
+</div>
+     
+     <pdf:nextpage> 
+
+{% if results_pivot_table %}
+<div class='results-table'>
+    <p class="label2" > Search Results </p>
+     {{ results_pivot_table }}
+</div>
+{% endif %}
+
+{% if results_pivot_tables %}
+{% for table in range(results_pivot_tables|length) %}
+<div class='results-table'>
+    <p class="label2" > Search Results <span class="pagin" > {{(table *entries)+1}} - {{(table*entries)+ results_pivot_tables[table][1]}} entries </span> </p>
+     {{ results_pivot_tables[table][0] }}
+</div>
+{% endfor %}
+{% endif %}
+
+
+</body>
+</html>
